@@ -1,13 +1,26 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
 import 'package:redux_prism/redux_prism.dart';
 
+class MessageAction {
+  final String message;
+
+  MessageAction({this.message});
+}
+
 void main() {
-  test('adds one to input values', () {
-    final calculator = Calculator();
-    expect(calculator.addOne(2), 3);
-    expect(calculator.addOne(-7), -6);
-    expect(calculator.addOne(0), 1);
-    expect(() => calculator.addOne(null), throwsNoSuchMethodError);
+  dynamic store;
+  MessageAction action;
+  next(action) => action;
+
+  setUp(() {
+    store = null;
+    action = MessageAction(message: 'hello');
+  });
+
+  test('dispatch action and catch on actions stream', () {
+    expectLater(StorePrism.actions, emitsInOrder([action]));
+
+    StorePrism.middleware(store, action, next);
   });
 }
