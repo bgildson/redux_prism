@@ -1,17 +1,11 @@
 name: redux_prism
-description: A new Flutter package project.
+description: Library used to easily access dispatched actions in a Redux Store.
 version: 0.1.0
 author: Gildson Bezerra <gildson13@hotmail.com>
 homepage: https://github.com/bgildson/redux_prism
 
 environment:
-  sdk: '>=2.1.0 <3.0.0'
-
-dependencies:
-  flutter:
-    sdk: flutter
+  sdk: '>=2.1.0 <4.0.0'
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   test: ^1.6.1
