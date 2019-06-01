@@ -1,3 +1,5 @@
+library redux_prism;
+
 import 'dart:async';
 
 final StreamController _controller = StreamController.broadcast();
