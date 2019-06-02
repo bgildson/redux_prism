@@ -1,9 +1,12 @@
 language: dart
-before_script:
+before_deploy:
   - pub global activate dart_coveralls
   - chmod +x tool/travis.sh
-script:
-  - ./tool/travis.sh
+deploy:
+  provider: script
+  script: ./tool/travis.sh
+  on:
+    tags: false
 cache:
   directories:
     - $HOME/.pub-cache
