@@ -13,6 +13,7 @@ class MessageApp extends StatelessWidget {
       store: Store<String>(
         (state, action) => state,
         middleware: [
+          // register StorePrism "proxy" middleware
           StorePrism.middleware
         ]
       ),
@@ -30,21 +31,23 @@ class MessageAction {
   MessageAction({this.message});
 
   @override
-  String toString() => 'MessageAction { message: "$message" }';
+  String toString() => 'MessageAction { message: $message }';
 }
 
-class MessagePage extends StatefulWidget{
+class MessagePage extends StatefulWidget {
   _MessagePageState createState() => _MessagePageState();
 }
 
 class _MessagePageState extends State<MessagePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _messageController = TextEditingController();
+  // used to cancel the subscription, when the widget is disposed
   StreamSubscription _actionsSubscription;
 
   @override
   void initState() {
     super.initState();
+    // listen to the actions stream and show a snackbar when a new action is dispatched
     _actionsSubscription = StorePrism.actions
       .listen((action) {
         _scaffoldKey.currentState
@@ -54,6 +57,7 @@ class _MessagePageState extends State<MessagePage> {
 
   @override
   void dispose() {
+    // ever remember to cancel the listen in widget dispose hook
     _actionsSubscription.cancel();
     super.dispose();
   }
