@@ -1,3 +1,8 @@
+## [0.1.1]
+Dart 2 compatibility
+
+  * Resolving sdk version
+
 ## [0.1.0]
 Initial version
 
