@@ -4,6 +4,7 @@ before_deploy:
   - chmod +x tool/travis.sh
 deploy:
   provider: script
+  skip_cleanup: true
   script: ./tool/travis.sh
   on:
     tags: false
