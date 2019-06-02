@@ -1,9 +1,15 @@
-## [0.1.1]
+## [0.1.2](https://github.com/bgildson/redux_prism/tree/v0.1.2)
+Changing to Dart 2 stable version
+
+  * Changing to stable sdk version
+  * linking repository tag to every version in CHANGELOG.md
+
+## [0.1.1](https://github.com/bgildson/redux_prism/tree/v0.1.1)
 Dart 2 compatibility
 
   * Resolving sdk version
 
-## [0.1.0]
+## [0.1.0](https://github.com/bgildson/redux_prism/tree/v0.1.0)
 Initial version
 
   * Includes resource to extra power redux with ability to catch actions like a stream
