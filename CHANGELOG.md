@@ -1,3 +1,8 @@
+## [1.0.0](https://github.com/bgildson/redux_prism/tree/v1.0.0)
+Added widget used to listen for dispatched actions in a cleanest way
+
+  * Upgraded example app to use [StorePrismListener] and reduce boilerplate when listening actions in the view
+
 ## [0.1.2](https://github.com/bgildson/redux_prism/tree/v0.1.2)
 Changing to Dart 2 stable version
 

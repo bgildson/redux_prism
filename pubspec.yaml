@@ -1,11 +1,16 @@
 name: redux_prism
 description: Library used to easily access dispatched actions in a Redux Store.
-version: 0.1.2
+version: 1.0.0
 author: Gildson Bezerra <gildson13@hotmail.com>
 homepage: https://github.com/bgildson/redux_prism
 
 environment:
   sdk: '>=2.0.0 <3.0.0'
 
+dependencies:
+  flutter:
+    sdk: flutter
+
 dev_dependencies:
-  test: ^1.6.1
+  flutter_test:
+    sdk: flutter

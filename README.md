@@ -8,8 +8,6 @@ Library used to easily access dispatched actions in a [Redux](https://pub.dartla
 
 ## Usage
 ```dart
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -25,12 +23,12 @@ class MessageApp extends StatelessWidget {
         middleware: [
           // register StorePrism "proxy" middleware
           StorePrism.middleware
-        ]
+        ],
       ),
       child: MaterialApp(
         title: 'Redux Prism',
         home: MessagePage()
-      )
+      ),
     );
 }
 
@@ -44,54 +42,41 @@ class MessageAction {
   String toString() => 'MessageAction { message: $message }';
 }
 
-class MessagePage extends StatefulWidget {
-  _MessagePageState createState() => _MessagePageState();
-}
-
-class _MessagePageState extends State<MessagePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+class MessagePage extends StatelessWidget {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final TextEditingController _messageController = TextEditingController();
-  // used to cancel the subscription, when the widget is disposed
-  StreamSubscription _actionsSubscription;
+
+  MessagePage({Key key}) : super(key: key);
 
   @override
-  void initState() {
-    super.initState();
-    // listen to the actions stream and show a snackbar when a new action is dispatched
-    _actionsSubscription = StorePrism.actions
-      .listen((action) {
-        _scaffoldKey.currentState
-          .showSnackBar(SnackBar(content: Text(action.toString())));
-      });
-  }
-
-  @override
-  void dispose() {
-    // ever remember to cancel the listen in widget dispose hook
-    _actionsSubscription.cancel();
-    super.dispose();
-  }
-
   Widget build(BuildContext context) =>
-    Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(title: Text('Redux Prism')),
-      body: Column(
-        children: <Widget>[
-          TextField(
-            controller: _messageController,
-            decoration: InputDecoration(labelText: 'Message')
-          ),
-          StoreBuilder<String>(
-            builder: (_, store) =>
-              OutlineButton(
-                onPressed: () =>
-                  store.dispatch(MessageAction(message: _messageController.text)),
-                child: Text('SEND')
-              )
-          )
-        ]
-      )
+    StorePrismListener(
+      listen: (action) =>
+        _scaffoldKey.currentState
+          ..hideCurrentSnackBar()
+          ..showSnackBar(SnackBar(content: Text(action.toString()))),
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(title: Text('Redux Prism')),
+        body: Column(
+          children: <Widget>[
+            TextField(
+              controller: _messageController,
+              decoration: InputDecoration(labelText: 'Message')
+            ),
+            StoreConnector<String, Function(String)>(
+              converter: (Store<String> store) =>
+                (message) => store.dispatch(MessageAction(message: message)),
+              rebuildOnChange: false,
+              builder: (_, dispatchMessageAction) =>
+                OutlineButton(
+                  onPressed: () => dispatchMessageAction(_messageController.text),
+                  child: Text('SEND')
+                )
+            ),
+          ],
+        ),
+      ),
     );
 }
 ```
