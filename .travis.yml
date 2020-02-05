@@ -1,13 +1,14 @@
-language: dart
-before_deploy:
-  - pub global activate dart_coveralls
+os:
+  - linux
+sudo: false
+before_script:
+  - git clone https://github.com/flutter/flutter.git -b stable --depth 1
+  - export PATH="$(pwd)/flutter/bin:$PATH"
+  - flutter doctor
+  - flutter packages get
+  - flutter pub global activate dart_coveralls
   - chmod +x tool/travis.sh
-deploy:
-  provider: script
-  skip_cleanup: true
-  script: ./tool/travis.sh
-  on:
-    tags: false
+script: ./tool/travis.sh
 cache:
   directories:
     - $HOME/.pub-cache

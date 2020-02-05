@@ -2,7 +2,7 @@
 
 set -e
 
-dart_coveralls report \
+flutter pub global run dart_coveralls report \
   --debug \
   --retry 2 \
   --throw-on-connectivity-error \
