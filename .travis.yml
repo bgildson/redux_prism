@@ -3,12 +3,14 @@ os:
 sudo: false
 before_script:
   - git clone https://github.com/flutter/flutter.git -b stable --depth 1
-  - export PATH="$(pwd)/flutter/bin:$PATH"
-  - flutter doctor
-  - flutter packages get
-  - flutter pub global activate dart_coveralls
-  - chmod +x tool/travis.sh
-script: ./tool/travis.sh
+  - ./flutter/bin/flutter doctor
+  - ./flutter/bin/flutter packages get
+  - gem install coveralls-lcov
+script:
+  - ./flutter/bin/flutter analyze --no-current-package --dartdocs $TRAVIS_BUILD_DIR/lib
+  - ./flutter/bin/flutter test --coverage --coverage-path=lcov.info
+after_success:
+  - coveralls-lcov lcov.info
 cache:
   directories:
     - $HOME/.pub-cache
